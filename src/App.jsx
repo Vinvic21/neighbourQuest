@@ -12,6 +12,7 @@ import WorkerListPage from './pages/WorkerListPage';
 import JobListPage from './pages/JobListPage';
 import JobDetailPage from './pages/JobDetailPage';
 import PostJobPage from './pages/PostJobPage';
+import "./App.css";
 
 
 function App() {
