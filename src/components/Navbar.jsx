@@ -1,47 +1,47 @@
 import React from 'react';
-import {link, useNavigate} from 'react-router-dom';
-import {useAuth} from '../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 function Navbar() {
     const navigate = useNavigate();
-    const {user, isAuthenticated, logout} = useAuth();
+    const { user, isAuthenticated, logout } = useAuth();
 
-    const handlelogout = () => {
+    const handleLogout = () => {
         logout();
         navigate("/login");
     };
-    return (
-        <nav className = "navbar">
-            <div className = "navbar-logo">
-                <link to = "/">NeighborQuest</link>
 
+    return (
+        <nav className="navbar">
+            <div className="navbar-logo">
+                <Link to="/">NeighborQuest</Link>
             </div>
-            <div className = "navbar-links">
-                <link to = "/jobs"> Find Jobs</link>
-                <link to = "/workers"> Find Workers</link>
+
+            <div className="navbar-links">
+                <Link to="/jobs">Find Jobs</Link>
+                <Link to="/workers">Find Workers</Link>
 
                 {isAuthenticated && user?.role === "employer" && (
-                    <link to = "/post-job"> Post Job</link>
-    
+                    <Link to="/post-job">Post Job</Link>
                 )}
+
                 {isAuthenticated ? (
                     <>
-                    <link to = "/dashboard"> Dashboard</link>
-                    <link to = {`/profile/${user?.id}`}> Profile</link>
-                    <button onclick = {handlelogout} classname = "Navbar-logout-button"> Logout</button>
+                        <Link to="/dashboard">Dashboard</Link>
+                        <Link to={`/profile/${user?.id}`}>Profile</Link>
+                        <button onClick={handleLogout} className="navbar-logout-btn">
+                            Logout
+                        </button>
                     </>
-
-
-                ) :(
+                ) : (
                     <>
-                    <link to = "/login"> Login </link>
-                    <link to = "/register"> Register</link>
+                        <Link to="/login">Login</Link>
+                        <Link to="/register">Register</Link>
                     </>
-                )
-            }
+                )}
             </div>
         </nav>
-    )
-
+    );
 }
+
 export default Navbar;

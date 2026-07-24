@@ -1,5 +1,5 @@
 import react, {useState} from "react";
-import {useNavigate, link} from "react-router-dom"
+import {useNavigate, Link} from "react-router-dom"
 import {useAuth} from "../context/AuthContext"
 
 function LoginPage() {
@@ -16,7 +16,7 @@ function LoginPage() {
     }
     async function handleSubmit(e){
         e.preventDefault()
-        setError("")
+        
         try{
             await login(formData);
             navigate("/dashboard")
@@ -27,8 +27,8 @@ function LoginPage() {
         }
 
     }
-    function toggleShowPassword() {
-        setShowPassword(true)
+    function togglePassword() {
+        setShowPassword(!showPassword)
     }
     return (
     <div className="auth-page">
@@ -78,3 +78,4 @@ function LoginPage() {
     </div>
   );
 }
+export default LoginPage;
