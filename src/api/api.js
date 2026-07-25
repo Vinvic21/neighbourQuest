@@ -14,10 +14,11 @@ export const loginUser = (credentials) => api.post("/auth/login", credentials)
 export const registerUser = (data) => api.post("/auth/register", data)
 
 export const getJobs = () => api.get("/jobs");
-export const getJobById = () => api.get(`?jobs/${id}`)
+export const getJobById = (id) => api.get(`/jobs/${id}`);
 export const createJob = (data) => api.post("/jobs", data);
 export const applyToJob = (jobId) => api.post(`/jobs/${jobId}/apply`);
 export const updateJobStatus = (jobId, status) => api.patch(`/jobs/${jobId}/status`, { status });
+export const getJobsPostedByEmployer = (employerId) => api.get(`/jobs/employer/${employerId}`);
 export const getApplicationsForJob = (jobId) => api.get(`/jobs/${jobId}/applications`)
 export const getMyApplications = () => api.get("/applications/me")
 export const updateApplicationStatus = (applicationId, status) => api.patch(`/applications/${applicationId}`, { status });
