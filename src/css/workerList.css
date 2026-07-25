@@ -1,0 +1,53 @@
+.worker-list-page {
+  padding: 2rem;
+}
+
+.worker-list-heading {
+  font-size: 1.8rem;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+}
+
+.worker-list-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.worker-search-input {
+  flex: 1;
+  min-width: 220px;
+  padding: 0.7rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+.worker-category-select {
+  padding: 0.7rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+.worker-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.worker-list-status {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+}
+
+.worker-list-error {
+  color: #dc2626;
+}
+
+.no-workers-message {
+  color: #94a3b8;
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+}

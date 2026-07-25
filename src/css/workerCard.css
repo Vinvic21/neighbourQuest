@@ -1,0 +1,102 @@
+.worker-card {
+  display: block;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.2rem;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.worker-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.worker-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.worker-avatar {
+  width: 44px;
+  height: 44px;
+  background: #2563eb;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.worker-card-name {
+  font-size: 1rem;
+  color: #1e293b;
+  margin: 0;
+}
+
+.worker-card-skill {
+  font-size: 0.8rem;
+  color: #2563eb;
+  text-transform: capitalize;
+  margin: 0;
+}
+
+.worker-card-rating {
+  margin-bottom: 0.8rem;
+}
+
+.star {
+  color: #e2e8f0;
+  font-size: 0.95rem;
+}
+
+.star.filled {
+  color: #f59e0b;
+}
+
+.rating-count {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-left: 0.4rem;
+}
+
+.worker-card-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+
+.worker-card-rate {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.worker-card-location {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.worker-availability {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.worker-availability.available {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.worker-availability.unavailable {
+  background: #fee2e2;
+  color: #dc2626;
+}
