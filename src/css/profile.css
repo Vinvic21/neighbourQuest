@@ -1,0 +1,120 @@
+.profile-page {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.profile-header-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-avatar-large {
+  width: 72px;
+  height: 72px;
+  background: #2563eb;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.profile-header-info {
+  flex: 1;
+}
+
+.profile-name {
+  font-size: 1.3rem;
+  color: #1e293b;
+  margin: 0 0 0.2rem 0;
+}
+
+.profile-role {
+  color: #2563eb;
+  font-size: 0.85rem;
+  text-transform: capitalize;
+  margin: 0 0 0.6rem 0;
+}
+
+.profile-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.profile-rating-text {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.profile-skill {
+  color: #475569;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  margin: 0 0 0.3rem 0;
+}
+
+.profile-location {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.profile-edit-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.profile-bio-section,
+.profile-reviews-section {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-bio-section h3,
+.profile-reviews-section h3 {
+  font-size: 1.1rem;
+  color: #1e293b;
+  margin-bottom: 0.8rem;
+}
+
+.profile-bio-section p {
+  color: #475569;
+  line-height: 1.5;
+}
+
+.no-reviews-message {
+  color: #94a3b8;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.profile-status {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+}
+
+.profile-error {
+  color: #dc2626;
+}
