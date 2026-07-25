@@ -3,7 +3,7 @@ import { getJobs } from "../api/api"
 import JobCard from "../components/JobCard"
 import "../css/jobList.css"
 
-function JoblistPage () {
+function JobListPage () {
     const [jobs, setJobs] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")

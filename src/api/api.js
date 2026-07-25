@@ -14,7 +14,7 @@ export const loginUser = (credentials) => api.post("/auth/login", credentials)
 export const registerUser = (data) => api.post("/auth/register", data)
 
 export const getJobs = () => api.get("/jobs");
-export const getJobsById = () => api.get(`?jobs/${id}`)
+export const getJobById = () => api.get(`?jobs/${id}`)
 export const createJob = (data) => api.post("/jobs", data);
 export const applyToJob = (jobId) => api.post(`/jobs/${jobId}/apply`);
 export const updateJobStatus = (jobId, status) => api.patch(`/jobs/${jobId}/status`, { status });

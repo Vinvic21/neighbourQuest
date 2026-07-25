@@ -1,0 +1,131 @@
+.job-detail-page {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.job-detail-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+}
+
+.job-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.job-detail-title {
+  font-size: 1.5rem;
+  color: #1e293b;
+  margin: 0;
+}
+
+.job-detail-status-badge {
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+
+.job-detail-category {
+  color: #2563eb;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  text-transform: capitalize;
+}
+
+.job-detail-meta {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.job-detail-meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-bottom: 0.2rem;
+}
+
+.meta-value {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.job-detail-description,
+.job-detail-employer {
+  margin-bottom: 1.5rem;
+}
+
+.job-detail-description h3,
+.job-detail-employer h3 {
+  font-size: 1rem;
+  color: #1e293b;
+  margin-bottom: 0.4rem;
+}
+
+.job-detail-description p,
+.job-detail-employer p {
+  color: #475569;
+  line-height: 1.5;
+}
+
+.apply-btn {
+  width: 100%;
+  padding: 0.85rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.apply-btn:hover {
+  background: #1d4ed8;
+}
+
+.apply-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.apply-success-message {
+  background: #dcfce7;
+  color: #16a34a;
+  padding: 0.8rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.apply-error-message {
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin-bottom: 0.8rem;
+}
+
+.job-detail-status {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+}
+
+.job-detail-error {
+  color: #dc2626;
+}

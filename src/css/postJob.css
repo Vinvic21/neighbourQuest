@@ -1,0 +1,89 @@
+.post-job-page {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.post-job-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+}
+
+.post-job-heading {
+  font-size: 1.5rem;
+  color: #1e293b;
+  margin-bottom: 0.3rem;
+}
+
+.post-job-subtext {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.post-job-form label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.4rem;
+  margin-top: 1rem;
+}
+
+.post-job-form input,
+.post-job-form select,
+.post-job-form textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.post-job-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.post-job-col {
+  flex: 1;
+}
+
+.post-job-submit-btn {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.85rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.post-job-submit-btn:hover {
+  background: #1d4ed8;
+}
+
+.post-job-submit-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.post-job-error {
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.post-job-status {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+}
