@@ -167,3 +167,127 @@
   background: #2563eb;
   color: white;
 }
+.hero-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+  padding: 4rem 2rem;
+  flex-wrap: wrap;
+}
+
+.hero-label {
+  color: #2563eb;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.hero-heading {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.hero-subtext {
+  color: #64748b;
+  max-width: 420px;
+  margin-bottom: 1.5rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.btn-primary {
+  background: #1e293b;
+  color: white;
+  padding: 0.8rem 1.6rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.btn-secondary {
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
+  padding: 0.8rem 1.6rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.hero-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.hero-stat-icon {
+  background: #f97316;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-image-wrapper {
+  flex: 1;
+  min-width: 300px;
+}
+
+.hero-image-card {
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  border-radius: 24px;
+  height: 420px;
+  position: relative;
+}
+
+.hero-badge {
+  position: absolute;
+  top: 30px;
+  right: -20px;
+  background: white;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-badge span {
+  font-size: 0.75rem;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.hero-badge p {
+  font-size: 0.85rem;
+  color: #1e293b;
+  margin-top: 2px;
+}
+
+.trusted-section {
+  text-align: center;
+  padding: 2rem;
+  color: #94a3b8;
+}
+
+.trusted-logos {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.trusted-name {
+  font-weight: 600;
+  color: #64748b;
+}

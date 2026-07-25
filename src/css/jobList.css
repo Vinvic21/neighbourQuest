@@ -1,0 +1,53 @@
+.job-list-page {
+  padding: 2rem;
+}
+
+.job-list-heading {
+  font-size: 1.8rem;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+}
+
+.job-list-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.job-search-input {
+  flex: 1;
+  min-width: 220px;
+  padding: 0.7rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+.job-category-select {
+  padding: 0.7rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+.job-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.job-list-status {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+}
+
+.job-list-error {
+  color: #dc2626;
+}
+
+.no-jobs-message {
+  color: #94a3b8;
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+}

@@ -1,0 +1,86 @@
+.job-card {
+  display: block;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.2rem;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.job-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.job-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.job-card-title {
+  font-size: 1.05rem;
+  color: #1e293b;
+  margin: 0;
+}
+
+.job-card-status {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.status-open {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status-progress {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.status-completed {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.status-default {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.job-card-category {
+  color: #2563eb;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.8rem;
+  text-transform: capitalize;
+}
+
+.job-card-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.job-card-budget {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.job-card-location {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.job-card-deadline {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
