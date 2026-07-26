@@ -24,6 +24,7 @@ function ProfilePage (){
                 
                 const responser = await getReviewsForUser(id)
                 setReviews(responser.data)
+                setLoading(false)
 
             } catch (errr){
                 setError("Faild to LOad Profile")

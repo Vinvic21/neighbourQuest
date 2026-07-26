@@ -7,7 +7,7 @@ function WorkerCard({worker}) {
         return `Ksh ${Number(rate).toLocaleString()}/hr`
 
     }
-    function RenderStars(rating){
+    function renderStars(rating){
         const stars = []
         const roundedRating = Math.round(rating || 0)
 

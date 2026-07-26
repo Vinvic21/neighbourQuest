@@ -4,7 +4,7 @@ import WorkerCard from "../components/WorkerCard";
 import "../css/workerList.css";
 
 function WorkerListPage (){
-    const [worker, setWorker] = useState([])
+    const [workers, setWorkers] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
     const [searchTerm, setSearchTerm] = useState("")
@@ -14,7 +14,8 @@ function WorkerListPage (){
         async function fetchWorkers (){
             try{
                 const response = await getWorkers();
-                setWorker(response.data)
+                setWorkers(response.data)
+                setLoading(false)
 
             }catch (err) {
                 setError("Failed to load workers. Please try again later.")
@@ -40,7 +41,7 @@ function WorkerListPage (){
       return matchesSearch && matchesCategory;   
         })
     }
-    function RenderWorkers (){
+    function renderWorkers (){
         const filteredWorkers = getFilteredWorkers()
         if (filteredWorkers.length === 0){
             return <p className="no-workers-message">No workers match your search.</p>
