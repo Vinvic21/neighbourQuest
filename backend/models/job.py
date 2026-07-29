@@ -14,7 +14,7 @@ class Job(db.Model):
     location = db.Column(db.String(100))
     deadline = db.Column(db.Date)
     status = db.Column(db.String(20), default="open")  #
-    created_at = db.Column(db.DateTime, dafault=datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.now)
 
     employer= db.relationship("EmployerProfile", back_populates="jobs")
 
