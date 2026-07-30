@@ -8,15 +8,21 @@ export const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
     const [token, setToken] = useState(null)
 
-    useEffect (() => {
-        const storedtoken = localStorage.getItem("token")
-        const storedUser = localStorage.getItem("user")
-        if (storedtoken && storedUser) {
-            setToken(storedtoken)
-            setUser(JSON.parse(storedUser))
-        }
-        setLoading(false)
-    }, []);
+useEffect(() => {
+  const storedToken = localStorage.getItem("token");
+  const storedUser = localStorage.getItem("user");
+
+  if (storedToken && storedUser && storedUser !== "undefined") {
+    try {
+      setToken(storedToken);
+      setUser(JSON.parse(storedUser));
+    } catch (err) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    }
+  }
+  setLoading(false);
+}, []);
     async function login(credentials){
         const response = await api.post("/auth/login", credentials)
         const {token: newToken, user:newUser} = response.data 

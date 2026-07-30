@@ -31,19 +31,19 @@ function WorkerCard({worker}) {
         </div>
         <div>
           <h3 className="worker-card-name">{worker.name}</h3>
-          <p className="worker-card-skill">{worker.skillCategory}</p>
+          <p className="worker-card-skill">{worker.skill_category}</p>
         </div>
       </div>
 
       <div className="worker-card-rating">
-        {renderStars(worker.averageRating)}
+        {renderStars(worker.average_rating)}
         <span className="rating-count">
-          ({worker.reviewCount || 0} reviews)
+          ({worker.review_count || 0} reviews)
         </span>
       </div>
 
       <div className="worker-card-details">
-        <p className="worker-card-rate">{formatRate(worker.hourlyRate)}</p>
+        <p className="worker-card-rate">{formatRate(worker.hourly_rate)}</p>
         <p className="worker-card-location">{worker.location}</p>
       </div>
 
@@ -61,5 +61,3 @@ function WorkerCard({worker}) {
 };
 
 export default WorkerCard;
-    
-

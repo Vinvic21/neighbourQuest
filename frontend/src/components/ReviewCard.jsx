@@ -3,9 +3,9 @@ import Rating from "./Rating";
 import "../css/reviewCard.css";
 
 function ReviewCard({review}){
-    function formartData (dateString){
+    function formatDate (dateString){
         const date = new Date(dateString)
-        return date.tolocaleDateString ("en-KE", {
+        return date.toLocaleDateString ("en-KE", {
             day: "numeric",
             month: "short",
             year: "numeric",

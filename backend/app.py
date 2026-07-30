@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_migrate import Migrate
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_cors import CORS
 from extensions import db, ma, jwt
 from models import User, WorkerProfile, EmployerProfile, Job, Application, Review
 from schemas import user_schema, users_schema, worker_profile_schema, worker_profiles_schema, employer_profile_schema, employer_profiles_schema, job_schema, jobs_schema, application_schema,applications_schema, review_schema, reviews_schema
@@ -8,7 +9,8 @@ from controllers import AuthController, JobController, WorkerController, Applica
 
 
 app =Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///neighborquest"
+CORS(app)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///neighborquest.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JWT_SECRET_KEY"] = "victorkipngeno"
 
@@ -112,7 +114,7 @@ def get_applications_for_job(job_id):
 @app.route("/applications/me")
 @jwt_required()
 def get_my_applications():
-    user_id = get_jwt_identity
+    user_id = get_jwt_identity()
     applications = ApplicationController.get_applications_for_worker(user_id)
     if applications is None:
         return jsonify({"error": "Worker profile not found"}), 404
@@ -148,6 +150,19 @@ def get_worker(worker_id):
 @app.route("/users/<int:user_id>")
 def get_user_profile(user_id):
     profile, profile_type = UserController.get_user_profile(user_id)
+
+    if not profile:
+        return jsonify({"error": "Profile not found"}), 404
+
+    if profile_type == "employer":
+        return jsonify(employer_profile_schema.dump(profile))
+
+    return jsonify(worker_profile_schema.dump(profile))
+
+@app.route("/users/<int:user_id>", methods=["PUT"])
+@jwt_required()
+def update_user_profile(user_id):
+    profile, profile_type = UserController.update_user_profile(user_id, request.json)
 
     if not profile:
         return jsonify({"error": "Profile not found"}), 404

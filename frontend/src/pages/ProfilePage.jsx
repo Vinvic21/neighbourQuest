@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { getUserProfile, getReviewsForUser } from "../api/api"
+import { getUserProfile, getReviewsForUser, updateUserProfile } from "../api/api"
 import ReviewCard from "../components/ReviewCard";
 import Rating from "../components/Rating"
 import "../css/profile.css"
@@ -16,11 +16,17 @@ function ProfilePage (){
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
 
+    const [isEditing, setIsEditing] = useState(false)
+    const [editData, setEditData] = useState({})
+    const [saveError, setSaveError] = useState("")
+    const [saving, setSaving] = useState(false)
+
     useEffect(() => {
         async function fetchProfileData(){
             try{
                 const response = await getUserProfile(id)
                 setProfile(response.data)
+                setEditData(response.data)
                 
                 const responser = await getReviewsForUser(id)
                 setReviews(responser.data)
@@ -34,7 +40,7 @@ function ProfilePage (){
         fetchProfileData()
     },[id])
 
-    function getAvaregeRating (){
+    function getAverageRating (){
         if (reviews.length === 0) return 0;
         const total = reviews.reduce((sum, review) => sum + review.rating, 0);
         return (total / reviews.length).toFixed(1);
@@ -48,6 +54,35 @@ function ProfilePage (){
             <ReviewCard key={review.id} review={review} />
         ))
 
+    }
+
+    function handleEditChange(e) {
+        setEditData({ ...editData, [e.target.name]: e.target.value })
+    }
+
+    function startEditing() {
+        setIsEditing(true)
+        setSaveError("")
+    }
+
+    function cancelEditing() {
+        setIsEditing(false)
+        setEditData(profile)
+        setSaveError("")
+    }
+
+    async function handleSaveProfile(e) {
+        e.preventDefault()
+        setSaving(true)
+        setSaveError("")
+        try {
+            const response = await updateUserProfile(id, editData)
+            setProfile(response.data)
+            setIsEditing(false)
+        } catch (err) {
+            setSaveError("Failed to save changes. Please try again.")
+        }
+        setSaving(false)
     }
 
     if (loading) {
@@ -72,29 +107,82 @@ function ProfilePage (){
         </div>
 
         <div className="profile-header-info">
-          <h2 className="profile-name">{profile.name}</h2>
-          <p className="profile-role">{profile.role}</p>
+          {!isEditing ? (
+            <>
+              <h2 className="profile-name">{profile.name}</h2>
+              <p className="profile-role">{profile.role}</p>
 
-          <div className="profile-rating-row">
-            <Rating rating={Number(getAverageRating())} readOnly={true} />
-            <span className="profile-rating-text">
-              {getAverageRating()} ({reviews.length} reviews)
-            </span>
-          </div>
+              <div className="profile-rating-row">
+                <Rating rating={Number(getAverageRating())} readOnly={true} />
+                <span className="profile-rating-text">
+                  {getAverageRating()} ({reviews.length} reviews)
+                </span>
+              </div>
 
-          {profile.role === "worker" && (
-            <p className="profile-skill">{profile.skillCategory}</p>
+              {profile.role === "worker" && (
+                <p className="profile-skill">{profile.skillCategory}</p>
+              )}
+
+              <p className="profile-location">{profile.location}</p>
+            </>
+          ) : (
+            <form onSubmit={handleSaveProfile} className="profile-edit-form">
+              {saveError && <p className="profile-edit-error">{saveError}</p>}
+
+              {profile.role === "worker" && (
+                <>
+                  <label>Skill Category</label>
+                  <input
+                    type="text"
+                    name="skillCategory"
+                    value={editData.skillCategory || ""}
+                    onChange={handleEditChange}
+                  />
+
+                  <label>Bio</label>
+                  <textarea
+                    name="bio"
+                    value={editData.bio || ""}
+                    onChange={handleEditChange}
+                    rows="3"
+                  ></textarea>
+
+                  <label>Hourly Rate</label>
+                  <input
+                    type="number"
+                    name="hourlyRate"
+                    value={editData.hourlyRate || ""}
+                    onChange={handleEditChange}
+                  />
+                </>
+              )}
+
+              <label>Location</label>
+              <input
+                type="text"
+                name="location"
+                value={editData.location || ""}
+                onChange={handleEditChange}
+              />
+
+              <div className="profile-edit-actions">
+                <button type="button" onClick={cancelEditing} className="profile-cancel-btn">
+                  Cancel
+                </button>
+                <button type="submit" className="profile-save-btn" disabled={saving}>
+                  {saving ? "Saving..." : "Save Changes"}
+                </button>
+              </div>
+            </form>
           )}
-
-          <p className="profile-location">{profile.location}</p>
         </div>
 
-        {isOwnProfile && (
-          <button className="profile-edit-btn">Edit Profile</button>
+        {isOwnProfile && !isEditing && (
+          <button className="profile-edit-btn" onClick={startEditing}>Edit Profile</button>
         )}
       </div>
 
-      {profile.bio && (
+      {profile.bio && !isEditing && (
         <div className="profile-bio-section">
           <h3>About</h3>
           <p>{profile.bio}</p>
@@ -110,5 +198,3 @@ function ProfilePage (){
 };
 
 export default ProfilePage;
-
-
