@@ -1,5 +1,5 @@
 from extensions import db
-from models import User
+from models import User, WorkerProfile, EmployerProfile
 
 
 class AuthController:
@@ -18,7 +18,24 @@ class AuthController:
         )
         new_user.set_password(user_data.get("password"))
 
+
         db.session.add(new_user)
+        db.session.commit()
+        if new_user.role in ("worker","both"):
+            worker_profile = WorkerProfile(
+                user_id=new_user.id,
+                skill_category=user_data.get("skillCategory", ""),
+                location=user_data.get("location", ""),
+            )
+            db.session.add(worker_profile)
+
+        if new_user.role in ("employer", "both"):
+            employer_profile = EmployerProfile(
+                user_id=new_user.id,
+                business_name=user_data.get("business_name", ""),
+                location=user_data.get("location", ""),
+            )
+            db.session.add(employer_profile)
         db.session.commit()
         return new_user
 

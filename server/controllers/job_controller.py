@@ -1,4 +1,5 @@
 from extensions import db
+from datetime import datetime
 from models import Job, EmployerProfile
 
 
@@ -24,6 +25,10 @@ class JobController:
         employer_profile = EmployerProfile.query.filter_by(user_id=user_id).first()
         if not employer_profile:
             return None
+        deadline_str = job_data.get("deadline")
+        deadline_date = None
+        if deadline_str:
+            deadline_date = datetime.strptime(deadline_str, "%Y-%m-%d").date()
 
         new_job = Job(
             employer_id=employer_profile.id,
@@ -32,7 +37,7 @@ class JobController:
             category=job_data.get("category"),
             budget=job_data.get("budget"),
             location=job_data.get("location"),
-            deadline=job_data.get("deadline"),
+            deadline= deadline_date,
         )
         db.session.add(new_job)
         db.session.commit()

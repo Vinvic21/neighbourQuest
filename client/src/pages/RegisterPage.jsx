@@ -1,38 +1,43 @@
-import React, {useState} from "react"
-import {Link, useNavigate} from "react-router-dom"
-import {useAuth} from "../context/AuthContext"
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-function RegisterPage(){
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: "",
-        role: "worker",
-    })
-    const [showPassword, setShowPssword] = useState(false)
-     const {register} = useAuth()
-     const navigate = useNavigate()
+function RegisterPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "worker",
+    location: "",
+    skill_category: "plumbing",
+    business_name: "",
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
-     function handleChange (e) {
-        setFormData ({...formData, [e.target.name]: e.target.value})
-    
-     }
-     async function handleSubmit (e) {
-        e.preventDefault()
-        try{
-            await register(formData)
-            navigate("/login")
-        }
-        catch (error){
-            return "Unable to register user"
+  const { register } = useAuth();
+  const navigate = useNavigate();
 
-        }
+  function handleChange(e) {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
 
-     }
-     function togglePassword (){
-        setShowPssword(!showPassword)
-     }
-     return (
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError("");
+    try {
+      await register(formData);
+      navigate("/login");
+    } catch (error) {
+      setError("Unable to register user. Please try again.");
+    }
+  }
+
+  function toggleShowPassword() {
+    setShowPassword(!showPassword);
+  }
+
+  return (
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-logo">
@@ -47,6 +52,8 @@ function RegisterPage(){
           <Link to="/login">Sign In</Link>
           <Link to="/register" className="active">Sign Up</Link>
         </div>
+
+        {error && <p className="auth-error">{error}</p>}
 
         <form onSubmit={handleSubmit} className="auth-form">
           <input
@@ -76,16 +83,49 @@ function RegisterPage(){
               onChange={handleChange}
               required
             />
-            <span onClick={togglePassword}>
+            <span onClick={toggleShowPassword}>
               {showPassword ? "hide" : "show"}
             </span>
           </div>
 
           <select name="role" value={formData.role} onChange={handleChange}>
-            <option value="worker"> Worker</option>
+            <option value="worker">Worker</option>
             <option value="employer">Employer</option>
             <option value="both">Both</option>
           </select>
+
+          <input
+            type="text"
+            name="location"
+            placeholder="Your location (e.g. Nairobi)"
+            value={formData.location}
+            onChange={handleChange}
+            required
+          />
+
+          {(formData.role === "worker" || formData.role === "both") && (
+            <select
+              name="skill_category"
+              value={formData.skill_category}
+              onChange={handleChange}
+            >
+              <option value="plumbing">Plumbing</option>
+              <option value="cleaning">Cleaning</option>
+              <option value="electrical">Electrical</option>
+              <option value="delivery">Delivery</option>
+              <option value="other">Other</option>
+            </select>
+          )}
+
+          {(formData.role === "employer" || formData.role === "both") && (
+            <input
+              type="text"
+              name="business_name"
+              placeholder="Business name (optional)"
+              value={formData.business_name}
+              onChange={handleChange}
+            />
+          )}
 
           <button type="submit" className="auth-submit-btn">
             Register
@@ -97,5 +137,3 @@ function RegisterPage(){
 }
 
 export default RegisterPage;
-
-

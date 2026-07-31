@@ -30,11 +30,11 @@ function JobDetailPage (){
         fetchJob();
     },[id]);
 
-    function formartBudget(budget){
+    function formatBudget(budget){
         return`Kshs ${Number(budget).toLocaleString()}`;
     }
     function formatDeadline(deadline) {
-        const data = new Date(deadline)
+        const date = new Date(deadline)
         return date.toLocaleString("en-KE",{
             day: "numeric",
             month: "short",
