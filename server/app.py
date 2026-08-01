@@ -6,13 +6,16 @@ from extensions import db, ma, jwt
 from models import User, WorkerProfile, EmployerProfile, Job, Application, Review
 from schemas import user_schema, users_schema, worker_profile_schema, worker_profiles_schema, employer_profile_schema, employer_profiles_schema, job_schema, jobs_schema, application_schema,applications_schema, review_schema, reviews_schema
 from controllers import AuthController, JobController, WorkerController, ApplicationController, ReviewController, UserController
+import os
 
 
 app =Flask(__name__)
-CORS(app)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///neighborquest.db"
+CORS(app, origins=["http://localhost:5173", "https://neighbour-quest.vercel.app"])
+
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///neighborquest.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL","sqlite:///neighborquest.db").replace("postgres://", "postgresql://", 1)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["JWT_SECRET_KEY"] = "victorkipngeno"
+app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", "victorkipngeno")
 
 db.init_app(app)
 ma.init_app(app)
