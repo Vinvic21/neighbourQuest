@@ -57,7 +57,7 @@ def login():
             "token": token,
             "user": {"id": user.id, "name": user.name, "email": user.email, "role": user.role},
         }), 200
-    return jsonify({"message": "Invalid email or password"})
+    return jsonify({"message": "Invalid email or password"}), 401
 
 # get all jobs 
 
@@ -138,7 +138,7 @@ def update_application_status(application_id):
     application = ApplicationController.update_status(application_id, status)
 
     if application :
-        return jsonify(applications_schema.dump(application))
+        return jsonify(application_schema.dump(application))
     return jsonify ({"error": "Application not found"}), 404
 
 # workeres, geting workers
@@ -159,7 +159,8 @@ def get_worker(worker_id):
 
 @app.route("/users/<int:user_id>")
 def get_user_profile(user_id):
-    profile, profile_type = UserController.get_user_profile(user_id)
+    profile_type_param = request.args.get("type")
+    profile, profile_type = UserController.get_user_profile(user_id, profile_type_param)
 
     if not profile:
         return jsonify({"error": "Profile not found"}), 404
@@ -172,7 +173,8 @@ def get_user_profile(user_id):
 @app.route("/users/<int:user_id>", methods=["PUT"])
 @jwt_required()
 def update_user_profile(user_id):
-    profile, profile_type = UserController.update_user_profile(user_id, request.json)
+    profile_type_param = request.args.get("type") or (request.json or {}).get("type")
+    profile, profile_type = UserController.update_user_profile(user_id, request.json, profile_type_param)
 
     if not profile:
         return jsonify({"error": "Profile not found"}), 404
@@ -187,7 +189,9 @@ def update_user_profile(user_id):
 @jwt_required()
 def submit_review():
     reviewer_id = get_jwt_identity()
-    new_review = ReviewController.submit_review(reviewer_id, request.json)
+    new_review, error = ReviewController.submit_review(reviewer_id, request.json)
+    if error:
+        return jsonify({"error": error}), 400
     return jsonify(review_schema.dump(new_review)), 201
 
 
@@ -198,4 +202,3 @@ def get_reviews_for_user(user_id):
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
-

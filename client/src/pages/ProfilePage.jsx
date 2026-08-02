@@ -21,10 +21,13 @@ function ProfilePage (){
     const [saveError, setSaveError] = useState("")
     const [saving, setSaving] = useState(false)
 
+    // only meaningful for a "both" role user viewing/editing their own profile
+    const [viewType, setViewType] = useState(null)
+
     useEffect(() => {
         async function fetchProfileData(){
             try{
-                const response = await getUserProfile(id)
+                const response = await getUserProfile(id, viewType)
                 setProfile(response.data)
                 setEditData(response.data)
                 
@@ -38,7 +41,7 @@ function ProfilePage (){
             }
         }
         fetchProfileData()
-    },[id])
+    },[id, viewType])
 
     function getAverageRating (){
         if (reviews.length === 0) return 0;
@@ -76,7 +79,7 @@ function ProfilePage (){
         setSaving(true)
         setSaveError("")
         try {
-            const response = await updateUserProfile(id, editData)
+            const response = await updateUserProfile(id, editData, viewType)
             setProfile(response.data)
             setIsEditing(false)
         } catch (err) {
@@ -97,7 +100,7 @@ function ProfilePage (){
         return <p className="profile-status">Profile not found.</p>;
     }
 
-    const isOwnProfile = user?.id === profile.id
+    const isOwnProfile = user?.id === profile.user_id
 
     return (
     <div className="profile-page">
@@ -112,6 +115,25 @@ function ProfilePage (){
               <h2 className="profile-name">{profile.name}</h2>
               <p className="profile-role">{profile.role}</p>
 
+              {isOwnProfile && user?.role === "both" && !isEditing && (
+                <div className="profile-type-toggle">
+                  <button
+                    type="button"
+                    className={viewType !== "employer" ? "active" : ""}
+                    onClick={() => setViewType("worker")}
+                  >
+                    Worker Profile
+                  </button>
+                  <button
+                    type="button"
+                    className={viewType === "employer" ? "active" : ""}
+                    onClick={() => setViewType("employer")}
+                  >
+                    Employer Profile
+                  </button>
+                </div>
+              )}
+
               <div className="profile-rating-row">
                 <Rating rating={Number(getAverageRating())} readOnly={true} />
                 <span className="profile-rating-text">
@@ -120,7 +142,7 @@ function ProfilePage (){
               </div>
 
               {profile.role === "worker" && (
-                <p className="profile-skill">{profile.skillCategory}</p>
+                <p className="profile-skill">{profile.skill_category}</p>
               )}
 
               <p className="profile-location">{profile.location}</p>
@@ -134,8 +156,8 @@ function ProfilePage (){
                   <label>Skill Category</label>
                   <input
                     type="text"
-                    name="skillCategory"
-                    value={editData.skillCategory || ""}
+                    name="skill_category"
+                    value={editData.skill_category || ""}
                     onChange={handleEditChange}
                   />
 
@@ -150,8 +172,20 @@ function ProfilePage (){
                   <label>Hourly Rate</label>
                   <input
                     type="number"
-                    name="hourlyRate"
-                    value={editData.hourlyRate || ""}
+                    name="hourly_rate"
+                    value={editData.hourly_rate || ""}
+                    onChange={handleEditChange}
+                  />
+                </>
+              )}
+
+              {profile.role === "employer" && (
+                <>
+                  <label>Business Name</label>
+                  <input
+                    type="text"
+                    name="business_name"
+                    value={editData.business_name || ""}
                     onChange={handleEditChange}
                   />
                 </>

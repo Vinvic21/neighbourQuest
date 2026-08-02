@@ -24,7 +24,7 @@ class AuthController:
         if new_user.role in ("worker","both"):
             worker_profile = WorkerProfile(
                 user_id=new_user.id,
-                skill_category=user_data.get("skillCategory", ""),
+                skill_category=user_data.get("skill_category", ""),
                 location=user_data.get("location", ""),
             )
             db.session.add(worker_profile)

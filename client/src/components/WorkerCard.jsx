@@ -24,7 +24,7 @@ function WorkerCard({worker}) {
     return stars;
     }
     return (
-    <Link to={`/profile/${worker.id}`} className="worker-card">
+    <Link to={`/profile/${worker.user_id}`} className="worker-card">
       <div className="worker-card-header">
         <div className="worker-avatar">
           {worker.name ? worker.name.charAt(0).toUpperCase() : "?"}

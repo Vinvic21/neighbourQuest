@@ -35,7 +35,7 @@ function WorkerListPage (){
         return workers.filter((worker) => {
         const matchesSearch = (worker.name || "").toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory =
-        categoryFilter === "all" || worker.skillCategory === categoryFilter;
+        categoryFilter === "all" || worker.skill_category === categoryFilter;
       return matchesSearch && matchesCategory;   
         })
     }

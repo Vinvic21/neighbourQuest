@@ -26,8 +26,8 @@ export const updateApplicationStatus = (applicationId, status) => api.patch(`/ap
 export const getWorkers = () => api.get("/workers");
 export const getWorkerById = (id) => api.get(`/workers/${id}`)
 //pRofile
-export const getUserProfile = (id) => api.get(`/users/${id}`);
-export const updateUserProfile = (id, data) => api.put(`/users/${id}`, data);
+export const getUserProfile = (id, type) => api.get(`/users/${id}`, { params: type ? { type } : {} });
+export const updateUserProfile = (id, data, type) => api.put(`/users/${id}`, data, { params: type ? { type } : {} });
 //reviews
 export const submitReview = (data) => api.post("/reviews", data);
 export const getReviewsForUser = (userId) => api.get(`/reviews/user/${userId}`);

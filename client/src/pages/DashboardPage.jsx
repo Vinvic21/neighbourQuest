@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
-import {getMyApplications, getJobsPostedByEmployer, getApplicationsForJob, updateApplicationStatus, submitReview } from "../api/api";
+import {getMyApplications, getJobsPostedByEmployer, getApplicationsForJob, updateApplicationStatus, updateJobStatus, submitReview } from "../api/api";
 import Rating from "../components/Rating";
 import "../css/dashboard.css";
 
@@ -70,6 +70,17 @@ function DashboardPage (){
     }
   };
 
+  async function handleMarkJobCompleted(jobId) {
+    try {
+      await updateJobStatus(jobId, "completed")
+      setPostedJobs((prev) =>
+        prev.map((job) => (job.id === jobId ? { ...job, status: "completed" } : job))
+      )
+    } catch (err) {
+      setError("Failed to update job status.")
+    }
+  };
+
   function openReviewForm (revieweeId, jobId) {
     setReviewTarget({ revieweeId, jobId })
     setReviewRating(0)
@@ -99,7 +110,7 @@ function DashboardPage (){
       });
       closeReviewForm();
     } catch (err) {
-      setReviewError("Failed to submit review. Please try again.")
+      setReviewError(err.response?.data?.error || "Failed to submit review. Please try again.")
     } finally {
       setReviewSubmitting(false);
     }
@@ -149,6 +160,15 @@ function DashboardPage (){
         <p className="dashboard-item-sub">
           Applicants: {applicantsByJob[job.id]?.length || 0}
         </p>
+
+        {job.status !== "completed" && (
+          <button
+            className="mark-completed-btn"
+            onClick={() => handleMarkJobCompleted(job.id)}
+          >
+            Mark as Completed
+          </button>
+        )}
 
         <div className="applicants-list">
           {applicantsByJob[job.id]?.map((applicant) => (
