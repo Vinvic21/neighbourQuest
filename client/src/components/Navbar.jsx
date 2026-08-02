@@ -21,7 +21,7 @@ function Navbar() {
                 <Link to="/jobs">Find Jobs</Link>
                 <Link to="/workers">Find Workers</Link>
 
-                {isAuthenticated && user?.role === "employer" && (
+                {isAuthenticated && (user?.role === "employer" || user?.role === "both") && (
                     <Link to="/post-job">Post Job</Link>
                 )}
 
