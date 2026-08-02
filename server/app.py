@@ -104,7 +104,7 @@ def update_job_status(job_id):
 
 # apllication routess
 
-app.route("/jobs/<int:job_id>/apply", methods=["POST"])
+@app.route("/jobs/<int:job_id>/apply", methods=["POST"])
 @jwt_required()
 def apply_to_job(job_id):
     user_id = get_jwt_identity()
