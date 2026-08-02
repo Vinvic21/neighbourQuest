@@ -29,11 +29,6 @@ migrate = Migrate(app, db)
 with app.app_context():
     db.create_all()
 
-@app.route("/seed-database-once")
-def seed_database_once():
-    from seed import seed_database
-    seed_database()
-    return jsonify({"message": "Database seeded successfully"})
 
 @app.route("/")
 def home():
