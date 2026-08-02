@@ -219,11 +219,10 @@ def seed_database():
         # ---------------- REVIEWS (M:N between User and User, via Review) ----------------
         print("Seeding reviews...")
 
-        # Job4 is completed -> both sides leave a review for each other
         review1 = Review(
             job_id=job4.id,
-            reviewer_id=both_user.id,          # employer reviewing worker
-            reviewee_id=both_user.id,          # (same person acted as both roles here)
+            reviewer_id=employer2.id,
+            reviewee_id=both_user.id,
             rating=5,
             comment="Great work, arrived on time and handled everything carefully.",
         )
