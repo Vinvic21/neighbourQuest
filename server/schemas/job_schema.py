@@ -7,5 +7,18 @@ class JobSchema(ma.SQLAlchemyAutoSchema):
         load_instance =True
         include_fk =True
 
+    employerName = ma.Method("get_employer_name")
+    employerPhone = ma.Method("get_employer_phone")
+
+    def get_employer_name(self, obj):
+        if obj.employer and obj.employer.user:
+            return obj.employer.user.name
+        return None
+
+    def get_employer_phone(self, obj):
+        if obj.employer and obj.employer.user:
+            return obj.employer.user.phone
+        return None
+
 job_schema = JobSchema()
 jobs_schema = JobSchema(many=True)

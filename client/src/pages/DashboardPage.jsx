@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import {getMyApplications, getJobsPostedByEmployer, getApplicationsForJob, updateApplicationStatus, updateJobStatus, submitReview } from "../api/api";
 import Rating from "../components/Rating";
+import { getWhatsAppLink } from "../utils/whatsapp";
 import "../css/dashboard.css";
 
 function DashboardPage (){
@@ -131,6 +132,20 @@ function DashboardPage (){
         </div>
         <p className="dashboard-item-sub">Employer: {app.employerName}</p>
 
+        {app.employerPhone && (
+          <a
+            className="whatsapp-btn"
+            href={getWhatsAppLink(
+              app.employerPhone,
+              `Hi, I'm messaging about the job "${app.jobTitle}" on NeighborQuest.`
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Message on WhatsApp
+          </a>
+        )}
+
         {app.status === "completed" && (
           <button
             className="review-trigger-btn"
@@ -174,6 +189,20 @@ function DashboardPage (){
           {applicantsByJob[job.id]?.map((applicant) => (
             <div key={applicant.id} className="applicant-row">
               <span>{applicant.workerName}</span>
+
+              {applicant.workerPhone && (
+                <a
+                  className="whatsapp-btn"
+                  href={getWhatsAppLink(
+                    applicant.workerPhone,
+                    `Hi, I'm messaging about your application for "${job.title}" on NeighborQuest.`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  WhatsApp
+                </a>
+              )}
 
               {applicant.status === "applied" && (
                 <div className="applicant-actions">

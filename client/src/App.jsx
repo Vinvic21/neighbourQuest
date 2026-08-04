@@ -12,6 +12,7 @@ import WorkerListPage from './pages/WorkerListPage';
 import JobListPage from './pages/JobListPage';
 import JobDetailPage from './pages/JobDetailPage';
 import PostJobPage from './pages/PostJobPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
 import "./App.css";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
                          <Route path="/profile/:id" element={<ProfilePage />} /> 
 
                          <Route path="/dashboard" element={<DashboardPage />} /> 
+                         <Route path="/admin" element={<AdminDashboardPage />} />
 
                         <Route path="*" element={<h2>404 - Page Not Found</h2>} />
                     </Routes>

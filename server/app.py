@@ -1,11 +1,12 @@
 from flask import Flask, jsonify, request
 from flask_migrate import Migrate
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
 from flask_cors import CORS
+from functools import wraps
 from extensions import db, ma, jwt
 from models import User, WorkerProfile, EmployerProfile, Job, Application, Review
 from schemas import user_schema, users_schema, worker_profile_schema, worker_profiles_schema, employer_profile_schema, employer_profiles_schema, job_schema, jobs_schema, application_schema,applications_schema, review_schema, reviews_schema
-from controllers import AuthController, JobController, WorkerController, ApplicationController, ReviewController, UserController
+from controllers import AuthController, JobController, WorkerController, ApplicationController, ReviewController, UserController, AdminController
 import os
 import re
 
@@ -30,6 +31,17 @@ with app.app_context():
     db.create_all()
 
 
+def admin_required(fn):
+    @wraps(fn)
+    @jwt_required()
+    def wrapper(*args, **kwargs):
+        claims = get_jwt()
+        if not claims.get("is_admin"):
+            return jsonify({"error": "Admin access required"}), 403
+        return fn(*args, **kwargs)
+    return wrapper
+
+
 @app.route("/")
 def home():
     return jsonify({"message": "welcome to neighborquest"})
@@ -48,16 +60,19 @@ def register():
 @app.route("/auth/login", methods=["POST"])
 def login():
     data = request.json
-    user = AuthController.authenticate_user(email=data.get("email"), password=data.get("password"))
+    user, error = AuthController.authenticate_user(email=data.get("email"), password=data.get("password"))
 
     if user:
-        token = create_access_token(identity=str(user.id),additional_claims={"name": user.name, "email": user.email, "role":user.role},)
+        token = create_access_token(
+            identity=str(user.id),
+            additional_claims={"name": user.name, "email": user.email, "role": user.role, "is_admin": user.is_admin},
+        )
 
         return jsonify({
             "token": token,
-            "user": {"id": user.id, "name": user.name, "email": user.email, "role": user.role},
+            "user": {"id": user.id, "name": user.name, "email": user.email, "role": user.role, "is_admin": user.is_admin},
         }), 200
-    return jsonify({"message": "Invalid email or password"}), 401
+    return jsonify({"message": error or "Invalid email or password"}), 401
 
 # get all jobs 
 
@@ -199,6 +214,60 @@ def submit_review():
 def get_reviews_for_user(user_id):
     reviews = ReviewController.get_reviews_for_user(user_id)
     return jsonify(reviews_schema.dump(reviews))
+
+
+# admin 
+
+@app.route("/admin/users")
+@admin_required
+def admin_get_users():
+    users = AdminController.get_all_users()
+    return jsonify(users_schema.dump(users))
+
+@app.route("/admin/users/<int:user_id>/suspend", methods=["PATCH"])
+@admin_required
+def admin_suspend_user(user_id):
+    user, error = AdminController.suspend_user(user_id)
+    if error:
+        return jsonify({"error": error}), 400
+    return jsonify(user_schema.dump(user))
+
+@app.route("/admin/users/<int:user_id>/reactivate", methods=["PATCH"])
+@admin_required
+def admin_reactivate_user(user_id):
+    user, error = AdminController.reactivate_user(user_id)
+    if error:
+        return jsonify({"error": error}), 400
+    return jsonify(user_schema.dump(user))
+
+@app.route("/admin/jobs")
+@admin_required
+def admin_get_jobs():
+    jobs = AdminController.get_all_jobs()
+    return jsonify(jobs_schema.dump(jobs))
+
+@app.route("/admin/jobs/<int:job_id>", methods=["DELETE"])
+@admin_required
+def admin_delete_job(job_id):
+    success, error = AdminController.delete_job(job_id)
+    if error:
+        return jsonify({"error": error}), 404
+    return jsonify({"message": "Job deleted"})
+
+@app.route("/admin/reviews")
+@admin_required
+def admin_get_reviews():
+    reviews = AdminController.get_all_reviews()
+    return jsonify(reviews_schema.dump(reviews))
+
+@app.route("/admin/reviews/<int:review_id>", methods=["DELETE"])
+@admin_required
+def admin_delete_review(review_id):
+    success, error = AdminController.delete_review(review_id)
+    if error:
+        return jsonify({"error": error}), 404
+    return jsonify({"message": "Review deleted"})
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

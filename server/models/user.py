@@ -11,6 +11,8 @@ class User(db.Model):
     phone = db.Column(db.String(20))
     password_hash = db.Column(db.String, nullable=False)
     role = db.Column(db.String(20), nullable=False, default="worker")  
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
+    is_active = db.Column(db.Boolean, nullable=False, default=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
 
     # one to one rel

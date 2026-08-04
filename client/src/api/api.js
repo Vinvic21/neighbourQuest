@@ -32,6 +32,15 @@ export const updateUserProfile = (id, data, type) => api.put(`/users/${id}`, dat
 export const submitReview = (data) => api.post("/reviews", data);
 export const getReviewsForUser = (userId) => api.get(`/reviews/user/${userId}`);
 
+//admin
+export const getAdminUsers = () => api.get("/admin/users");
+export const suspendUser = (userId) => api.patch(`/admin/users/${userId}/suspend`);
+export const reactivateUser = (userId) => api.patch(`/admin/users/${userId}/reactivate`);
+export const getAdminJobs = () => api.get("/admin/jobs");
+export const deleteJobAdmin = (jobId) => api.delete(`/admin/jobs/${jobId}`);
+export const getAdminReviews = () => api.get("/admin/reviews");
+export const deleteReviewAdmin = (reviewId) => api.delete(`/admin/reviews/${reviewId}`);
+
 export default api;
 
 

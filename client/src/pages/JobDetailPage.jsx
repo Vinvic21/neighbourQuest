@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import  {useAuth} from "../context/AuthContext"
 import { getJobById, applyToJob } from "../api/api";
+import { getWhatsAppLink } from "../utils/whatsapp";
 import "../css/jobDetail.css";
 
 function JobDetailPage (){
@@ -105,6 +106,19 @@ function JobDetailPage (){
         <div className="job-detail-employer">
           <h3>Posted by</h3>
           <p>{job.employerName || "Employer"}</p>
+          {isAuthenticated && job.employerPhone && (
+            <a
+              className="whatsapp-btn"
+              href={getWhatsAppLink(
+                job.employerPhone,
+                `Hi, I'm interested in your job posting "${job.title}" on NeighborQuest.`
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Message on WhatsApp
+            </a>
+          )}
         </div>
 
         {applySuccess ? (
@@ -138,8 +152,3 @@ function JobDetailPage (){
 };
 
 export default JobDetailPage;
-
-            
-    
-
-

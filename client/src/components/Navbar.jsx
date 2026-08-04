@@ -27,8 +27,13 @@ function Navbar() {
 
                 {isAuthenticated ? (
                     <>
-                        <Link to="/dashboard">Dashboard</Link>
-                        <Link to={`/profile/${user?.id}`}>Profile</Link>
+                        {user?.role !== "admin" && (
+                            <>
+                                <Link to="/dashboard">Dashboard</Link>
+                                <Link to={`/profile/${user?.id}`}>Profile</Link>
+                            </>
+                        )}
+                        {user?.is_admin && <Link to="/admin">Admin</Link>}
                         <button onClick={handleLogout} className="navbar-logout-btn">
                             Logout
                         </button>

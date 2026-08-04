@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { getUserProfile, getReviewsForUser, updateUserProfile } from "../api/api"
 import ReviewCard from "../components/ReviewCard";
 import Rating from "../components/Rating"
+import { getWhatsAppLink } from "../utils/whatsapp";
 import "../css/profile.css"
 
 function ProfilePage (){
@@ -146,10 +147,39 @@ function ProfilePage (){
               )}
 
               <p className="profile-location">{profile.location}</p>
+
+              {isOwnProfile && (
+                <p className="profile-phone">
+                  {profile.phone ? profile.phone : "No phone number on file"}
+                </p>
+              )}
+
+              {!isOwnProfile && profile.phone && (
+                <a
+                  className="whatsapp-btn"
+                  href={getWhatsAppLink(
+                    profile.phone,
+                    `Hi ${profile.name || ""}, I found your profile on NeighborQuest.`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Message on WhatsApp
+                </a>
+              )}
             </>
           ) : (
             <form onSubmit={handleSaveProfile} className="profile-edit-form">
               {saveError && <p className="profile-edit-error">{saveError}</p>}
+
+              <label>Phone Number</label>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="e.g. 0712345678"
+                value={editData.phone || ""}
+                onChange={handleEditChange}
+              />
 
               {profile.role === "worker" && (
                 <>

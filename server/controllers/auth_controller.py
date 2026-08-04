@@ -44,7 +44,10 @@ class AuthController:
     def authenticate_user(email, password):
         user = User.query.filter_by(email=email).first()
 
-        if user and user.check_password(password):
-            return user
+        if not user or not user.check_password(password):
+            return None, "Invalid email or password"
 
-        return None
+        if not user.is_active:
+            return None, "This account has been suspended. Contact support for help."
+
+        return user, None

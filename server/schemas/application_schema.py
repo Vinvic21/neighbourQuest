@@ -13,8 +13,10 @@ class ApplicationSchema(ma.SQLAlchemyAutoSchema):
     jobTitle = ma.Method("get_job_title")
     employerId = ma.Method("get_employer_id")     # employer's User.id, for submitting a review
     employerName = ma.Method("get_employer_name")
+    employerPhone = ma.Method("get_employer_phone")
     workerId = ma.Method("get_worker_id")         # worker's User.id, for submitting a review
     workerName = ma.Method("get_worker_name")
+    workerPhone = ma.Method("get_worker_phone")
 
     def get_job_id(self, obj):
         return obj.job.id if obj.job else None
@@ -32,6 +34,11 @@ class ApplicationSchema(ma.SQLAlchemyAutoSchema):
             return obj.job.employer.user.name
         return None
 
+    def get_employer_phone(self, obj):
+        if obj.job and obj.job.employer and obj.job.employer.user:
+            return obj.job.employer.user.phone
+        return None
+
     def get_worker_id(self, obj):
         if obj.worker and obj.worker.user:
             return obj.worker.user.id
@@ -40,6 +47,11 @@ class ApplicationSchema(ma.SQLAlchemyAutoSchema):
     def get_worker_name(self, obj):
         if obj.worker and obj.worker.user:
             return obj.worker.user.name
+        return None
+
+    def get_worker_phone(self, obj):
+        if obj.worker and obj.worker.user:
+            return obj.worker.user.phone
         return None
 
 

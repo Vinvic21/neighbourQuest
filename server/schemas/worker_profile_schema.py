@@ -11,6 +11,7 @@ class WorkerProfileSchema(ma.SQLAlchemyAutoSchema):
 
     name = ma.Method("get_name")
     email = ma.Method("get_email")
+    phone = ma.Method("get_phone")
     role = ma.Method("get_role")
     average_rating = ma.Method("get_average_rating")
     review_count = ma.Method("get_review_count")
@@ -20,6 +21,10 @@ class WorkerProfileSchema(ma.SQLAlchemyAutoSchema):
 
     def get_email(self, obj):
         return obj.user.email if obj.user else None
+
+    def get_phone(self, obj):
+        return obj.user.phone if obj.user else None
+
     def get_role(self, obj):
         return obj.user.role if obj.user else None
 
@@ -34,13 +39,12 @@ class WorkerProfileSchema(ma.SQLAlchemyAutoSchema):
         reviews = self._get_reviews(obj)
         if not reviews:
             return 0
-        return sum(review.rating for review in reviews) / len(reviews)
+        return round(sum(r.rating for r in reviews) / len(reviews), 1)
 
     def get_review_count(self, obj):
         if hasattr(obj, "_review_count"):
             return obj._review_count
-        reviews = self._get_reviews(obj)
-        return len(reviews)
+        return len(self._get_reviews(obj))
 
 
 worker_profile_schema = WorkerProfileSchema()

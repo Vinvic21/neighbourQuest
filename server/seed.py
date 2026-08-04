@@ -63,7 +63,16 @@ def seed_database():
         )
         both_user.set_password("password123")
 
-        db.session.add_all([worker1, worker2, worker3, employer1, employer2, both_user])
+        admin_user = User(
+            name="Admin",
+            email="admin@example.com",
+            phone="0700000000",
+            role="admin",
+            is_admin=True,
+        )
+        admin_user.set_password("admin1234")
+
+        db.session.add_all([worker1, worker2, worker3, employer1, employer2, both_user, admin_user])
         db.session.commit()
 
         # ---------------- WORKER PROFILES (1:1 with User) ----------------
