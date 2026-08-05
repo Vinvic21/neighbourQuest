@@ -146,7 +146,7 @@ function DashboardPage (){
           </a>
         )}
 
-        {app.status === "completed" && (
+        {app.jobStatus === "completed" && (
           <button
             className="review-trigger-btn"
             onClick={() => openReviewForm(app.employerId, app.jobId)}

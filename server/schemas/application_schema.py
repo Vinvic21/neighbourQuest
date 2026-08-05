@@ -8,9 +8,10 @@ class ApplicationSchema(ma.SQLAlchemyAutoSchema):
         load_instance = True
         include_fk = True
 
-    # computed / joined fields the frontend dashboard relies on
+    #  joined fields the frontend dashboard relies on
     jobId = ma.Method("get_job_id")
     jobTitle = ma.Method("get_job_title")
+    jobStatus = ma.Method("get_job_status")
     employerId = ma.Method("get_employer_id")     # employer's User.id, for submitting a review
     employerName = ma.Method("get_employer_name")
     employerPhone = ma.Method("get_employer_phone")
@@ -23,6 +24,9 @@ class ApplicationSchema(ma.SQLAlchemyAutoSchema):
 
     def get_job_title(self, obj):
         return obj.job.title if obj.job else None
+
+    def get_job_status(self, obj):
+        return obj.job.status if obj.job else None
 
     def get_employer_id(self, obj):
         if obj.job and obj.job.employer and obj.job.employer.user:
